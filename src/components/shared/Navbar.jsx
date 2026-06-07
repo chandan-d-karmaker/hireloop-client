@@ -18,7 +18,7 @@ export default function NavigationBar() {
     return (
         <div className="w-full bg-[#111111] py-4 px-4 sm:px-8">
 
-            <nav className="mx-auto flex w-full max-w-7xl items-center justify-between  ">
+            <nav className="mx-auto flex w-full max-w-7xl items-center justify-between ">
 
                 {/* Left: Logo */}
                 <div className="flex items-center justify-center">
@@ -26,7 +26,7 @@ export default function NavigationBar() {
                 </div>
 
                 {/* Center: Desktop Links*/}
-                <div className="hidden sm:flex items-center justify-between gap-4 p-4 rounded-2xl bg-[#1c1919] border border-white/5 shadow-lg">
+                <div className="hidden sm:flex items-center justify-between gap-4 p-4 rounded-4xl bg-[#1c1919] border border-white/5 shadow-lg">
                     <ul className="flex items-center gap-8">
                         {menuItems.map((item, index) => (
                             <li key={index}>
