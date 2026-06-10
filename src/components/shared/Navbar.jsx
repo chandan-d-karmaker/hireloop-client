@@ -16,7 +16,7 @@ export default function NavigationBar() {
     ];
 
     return (
-        <div className="w-full bg-[#111111] py-4 px-4 sm:px-8">
+        <div className="w-full py-4 px-4 sm:px-8">
 
             <nav className="mx-auto flex w-full max-w-7xl items-center justify-between ">
 
