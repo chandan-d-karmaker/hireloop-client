@@ -5,9 +5,13 @@ import { Button } from "@heroui/react";
 import Link from "next/link";
 import Logo from "@/assets/images/logo.png";
 import Image from "next/image";
+import { useTheme } from "next-themes";
+import ThemeSwitcher, { ThemeSwitch } from "./theme-toggle";
+import ThemeToggle from "./theme-toggle";
 
 export default function NavigationBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { theme, setTheme } = useTheme();
 
     const menuItems = [
         { name: "Browse Jobs", href: "/jobs" },
@@ -26,13 +30,13 @@ export default function NavigationBar() {
                 </div>
 
                 {/* Center: Desktop Links*/}
-                <div className="hidden sm:flex items-center justify-between gap-4 p-4 rounded-4xl bg-[#1c1919] border border-white/5 shadow-lg">
+                <div className="hidden sm:flex items-center justify-between gap-4 p-4 rounded-4xl bg-background/70 border border-white/5 shadow-lg">
                     <ul className="flex items-center gap-8">
                         {menuItems.map((item, index) => (
                             <li key={index}>
                                 <Link
                                     href={item.href}
-                                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+                                    className="text-sm font-medium text-foreground/80 hover:text-white transition-colors"
                                 >
                                     {item.name}
                                 </Link>
@@ -42,6 +46,8 @@ export default function NavigationBar() {
 
                     {/* Subtle divider from your image */}
                     <div className="h-5 w-px bg-gray-700/80"></div>
+
+                    <ThemeToggle />
 
                     {/* Right: Auth Buttons */}
                     <div className="flex items-center gap-4">
@@ -66,7 +72,7 @@ export default function NavigationBar() {
 
                 {/* Mobile Menu Toggle Button */}
                 <button
-                    className="sm:hidden text-gray-300 hover:text-white focus:outline-none p-1"
+                    className="sm:hidden text-foreground/80 hover:text-white focus:outline-none p-1"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 >

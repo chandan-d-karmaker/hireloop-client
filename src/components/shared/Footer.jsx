@@ -26,7 +26,7 @@ export default function Footer() {
     };
 
     return (
-        <footer className="w-full bg-[#050505] pt-16 pb-8 px-5 sm:px-10 border-t border-white/5">
+        <footer className="w-full bg-background pt-16 pb-8 px-5 sm:px-10 border-t border-white/5">
             <div className="max-w-7xl mx-auto">
                 {/* Top Section: Branding & Links */}
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
