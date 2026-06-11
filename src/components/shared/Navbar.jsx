@@ -26,7 +26,9 @@ export default function NavigationBar() {
 
                 {/* Left: Logo */}
                 <div className="flex items-center justify-center">
-                    <Image src={Logo} alt='logo' height={50} width={150}></Image>
+                    <Link href={'/'}>
+                        <Image src={Logo} alt='logo' height={50} width={150}></Image>
+                    </Link>
                 </div>
 
                 {/* Center: Desktop Links*/}
@@ -53,7 +55,7 @@ export default function NavigationBar() {
                     <div className="flex items-center gap-4">
                         <Button variant="ghost">
                             <Link
-                                href="/login"
+                                href="/auth/login"
                                 className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors"
                             >
                                 Sign In
@@ -61,11 +63,12 @@ export default function NavigationBar() {
                         </Button>
 
                         <Button
-                            as={Link}
-                            href="/register"
                             className="bg-[#635BFF] text-white hover:bg-indigo-500 font-medium rounded-xl px-5 shadow-sm"
                         >
-                            Get Started
+                            <Link href="/auth/signup">
+
+                                Get Started
+                            </Link>
                         </Button>
                     </div>
                 </div>
@@ -108,7 +111,7 @@ export default function NavigationBar() {
                         <li><hr className="border-gray-700/50" /></li>
                         <li>
                             <Link
-                                href="/login"
+                                href="auth/login"
                                 className="block text-base font-medium text-indigo-400"
                                 onClick={() => setIsMenuOpen(false)}
                             >

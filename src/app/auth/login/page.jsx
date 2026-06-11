@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import { Check, Eye, EyeSlash } from "@gravity-ui/icons";
 import { Button, Card, FieldError, Form, Input, InputGroup, Label, TextField, toast } from "@heroui/react";
 import { authClient } from '@/lib/auth-client';
+import Link from 'next/link';
 
 const LoginPage = () => {
     const [isVisible, setIsVisible] = useState(false);
 
-        const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const userData = Object.fromEntries(formData.entries());
@@ -85,6 +86,12 @@ const LoginPage = () => {
                             </InputGroup.Suffix>
                         </InputGroup>
                     </TextField>
+
+                    <Link href='/auth/signup'>
+                        <p>Not a member? <span className='text-blue-500'>Register Now</span> </p>
+
+                    </Link>
+
 
                     <div className="flex gap-2">
                         <Button type="submit">
