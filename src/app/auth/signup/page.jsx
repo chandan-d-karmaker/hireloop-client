@@ -4,10 +4,12 @@ import { authClient } from "@/lib/auth-client";
 import { Check, Eye, EyeSlash } from "@gravity-ui/icons";
 import { Button, Card, FieldError, Form, Input, InputGroup, Label, TextField } from "@heroui/react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Signup() {
 
     const [isVisible, setIsVisible] = useState(false);
+    const [error, setError] = useState('');
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -20,6 +22,12 @@ export default function Signup() {
         });
 
         console.log("signup detailes: ", { data, error });
+
+        if (error) {
+            toast.error(error.message)
+        } else {
+            toast.success("Signup Successfull!");
+        }
 
         // alert(`Form submitted with: ${JSON.stringify(data, null, 2)}`);
         window.location.href = '/'
@@ -37,6 +45,15 @@ export default function Signup() {
                 </div>
 
                 <Form className="flex flex-col gap-4" onSubmit={onSubmit}>
+
+                    {
+                        error && <div className="alert alert-error rounded-lg text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>{error}</span>
+                        </div>
+                    }
 
                     <TextField className="w-full max-w-64" name="name" type="text">
                         <Label>Name</Label>

@@ -1,12 +1,14 @@
 'use client'
 import React, { useState } from 'react';
 import { Check, Eye, EyeSlash } from "@gravity-ui/icons";
-import { Button, Card, FieldError, Form, Input, InputGroup, Label, TextField, toast } from "@heroui/react";
+import { Button, Card, FieldError, Form, Input, InputGroup, Label, TextField } from "@heroui/react";
 import { authClient } from '@/lib/auth-client';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 const LoginPage = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +27,7 @@ const LoginPage = () => {
             setError(error.message);
             return;
         } else {
-            toast.success("Logged in successfully!")
+            toast.success("Logged in successfully!");
         }
         // callbackURL not working, so I've to manually redirect
         window.location.href = '/'
@@ -45,6 +47,15 @@ const LoginPage = () => {
                 </div>
 
                 <Form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+
+                    {
+                        error && <div className="alert alert-error rounded-lg text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>{error}</span>
+                        </div>
+                    }
 
 
                     <TextField

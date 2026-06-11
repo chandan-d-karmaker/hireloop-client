@@ -1,17 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@heroui/react";
+import { Avatar, Button } from "@heroui/react";
 import Link from "next/link";
 import Logo from "@/assets/images/logo.png";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import ThemeSwitcher, { ThemeSwitch } from "./theme-toggle";
 import ThemeToggle from "./theme-toggle";
+import { signOut, useSession } from "@/lib/auth-client";
 
 export default function NavigationBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { theme, setTheme } = useTheme();
+    // const { theme, setTheme } = useTheme();
+    const { data } = useSession();
+    const user = data?.user;
+    // console.log(user);
 
     const menuItems = [
         { name: "Browse Jobs", href: "/jobs" },
@@ -49,27 +53,39 @@ export default function NavigationBar() {
                     {/* Subtle divider from your image */}
                     <div className="h-5 w-px bg-gray-700/80"></div>
 
-                    <ThemeToggle />
+                    {/* <ThemeToggle /> */}
 
                     {/* Right: Auth Buttons */}
                     <div className="flex items-center gap-4">
-                        <Button variant="ghost">
-                            <Link
+
+                        {
+                            user ? <Button variant="ghost" onClick={() => signOut()}>
+                                Log out
+                            </Button> : <Link
                                 href="/auth/login"
                                 className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors"
                             >
-                                Sign In
+                                Log In
                             </Link>
-                        </Button>
+                        }
 
-                        <Button
+                        {
+                            user && <div>
+                                <Avatar>
+                                    <Avatar.Image alt={user?.name} src={user?.image} />
+                                    <Avatar.Fallback>{user.name[0]}</Avatar.Fallback>
+                                </Avatar>
+                            </div>
+                        }
+
+                        {!user && <Button
                             className="bg-[#635BFF] text-white hover:bg-indigo-500 font-medium rounded-xl px-5 shadow-sm"
                         >
                             <Link href="/auth/signup">
 
                                 Get Started
                             </Link>
-                        </Button>
+                        </Button>}
                     </div>
                 </div>
 
