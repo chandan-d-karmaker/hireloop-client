@@ -24,9 +24,9 @@ export default function NavigationBar() {
     ];
 
     return (
-        <div className="w-full py-4 px-4 sm:px-8">
+        <div className="w-full py-4 px-4 sm:px-8 border-b border-default">
 
-            <nav className="mx-auto flex w-full max-w-7xl items-center justify-between ">
+            <nav className="mx-auto flex w-full max-w-4/5 items-center justify-between ">
 
                 {/* Left: Logo */}
                 <div className="flex items-center justify-center">
