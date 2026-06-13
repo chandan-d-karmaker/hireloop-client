@@ -33,7 +33,7 @@ const stats = [
 export default function HeroSection() {
     return (
 
-        <section className="relative w-full flex flex-col items-center justify-center px-4 pt-20 mt-20 overflow-hidden">
+        <section className="relative w-full flex flex-col items-center justify-center px-4 pt-20 overflow-hidden">
 
             <Image
                 src={globle}
