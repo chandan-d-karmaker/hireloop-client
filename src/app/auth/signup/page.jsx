@@ -4,6 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import { Check, Eye, EyeSlash } from "@gravity-ui/icons";
 import { Button, Card, FieldError, Form, Input, InputGroup, Label, TextField } from "@heroui/react";
 import { useState } from "react";
+import { Description, Radio, RadioGroup } from "@heroui/react";
 import toast from "react-hot-toast";
 
 export default function Signup() {
@@ -15,6 +16,8 @@ export default function Signup() {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const userData = Object.fromEntries(formData.entries());
+
+        console.log(userData);
 
         const { data, error } = await authClient.signUp.email({
             ...userData,
@@ -100,10 +103,30 @@ export default function Signup() {
                         </InputGroup>
                     </TextField>
 
-                    <div className="flex gap-2">
-                        <Button type="submit">
-                            <Check />
-                            Submit
+
+                    <Label>Select your role</Label>
+                    <RadioGroup defaultValue="seeker" name="role" orientation="horizontal">
+                        <Radio value="seeker">
+                            <Radio.Control>
+                                <Radio.Indicator />
+                            </Radio.Control>
+                            <Radio.Content>
+                                <Label>Job Seeker</Label>
+                            </Radio.Content>
+                        </Radio>
+                        <Radio value="recruiter">
+                            <Radio.Control>
+                                <Radio.Indicator />
+                            </Radio.Control>
+                            <Radio.Content>
+                                <Label>Recruiter</Label>
+                            </Radio.Content>
+                        </Radio>
+                    </RadioGroup>
+
+                    <div className="flex gap-2 w-full">
+                        <Button type="submit" className="w-full">
+                            Sign Up
                         </Button>
                         <Button type="reset" variant="secondary">
                             Reset

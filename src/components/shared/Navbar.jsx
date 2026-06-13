@@ -15,7 +15,7 @@ export default function NavigationBar() {
     // const { theme, setTheme } = useTheme();
     const { data } = useSession();
     const user = data?.user;
-    // console.log(user);
+    console.log(user);
 
     const menuItems = [
         { name: "Browse Jobs", href: "/jobs" },

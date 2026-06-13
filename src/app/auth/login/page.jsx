@@ -104,9 +104,8 @@ const LoginPage = () => {
                     </Link>
 
 
-                    <div className="flex gap-2">
-                        <Button type="submit">
-                            <Check />
+                    <div className="flex gap-2 w-full">
+                        <Button type="submit" className="w-full">
                             Login
                         </Button>
                         <Button type="reset" variant="secondary">
