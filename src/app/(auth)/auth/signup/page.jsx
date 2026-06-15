@@ -22,10 +22,10 @@ export default function Signup() {
 
         const { data, error } = await authClient.signUp.email({
             ...userData,
-            callbackURL: "/",
+           
         });
 
-        console.log("signup detailes: ", { data, error });
+        // console.log("signup detailes: ", { data, error });
 
         if (error) {
             toast.error(error.message)
@@ -33,8 +33,15 @@ export default function Signup() {
             toast.success("Signup Successfull!");
         }
 
-        // alert(`Form submitted with: ${JSON.stringify(data, null, 2)}`);
-        window.location.href = '/'
+        const role = data?.user?.role;
+
+        if (role === 'recruiter') {
+            window.location.href = '/dashboard/recruiter';
+        } else if (role === 'seeker') {
+            window.location.href = '/dashboard/seeker';
+        } else {
+            window.location.href = '/';
+        }
     };
 
     return (

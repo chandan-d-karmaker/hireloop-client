@@ -18,9 +18,10 @@ const LoginPage = () => {
         const { data, error } = await authClient.signIn.email({
             ...userData,
 
-            callbackURL: '/',
+            // callbackURL: '/',
         });
-        console.log("Login user data:", { data, error })
+
+        console.log("Login user data:", data)
 
 
         if (error) {
@@ -29,8 +30,17 @@ const LoginPage = () => {
         } else {
             toast.success("Logged in successfully!");
         }
-        // callbackURL not working, so I've to manually redirect
-        window.location.href = '/'
+
+        const role = data?.user?.role;
+
+        if (role === 'recruiter') {
+            window.location.href = '/dashboard/recruiter';
+        } else if (role === 'seeker') {
+            window.location.href = '/dashboard/seeker';
+        } else {
+            window.location.href = '/';
+        }
+
 
     }
 
