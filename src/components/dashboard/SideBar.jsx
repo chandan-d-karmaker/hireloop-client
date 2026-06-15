@@ -1,6 +1,8 @@
 import { Bars, Bell, Envelope, Gear, House, Magnifier, Person } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
+import Image from "next/image";
 import { VscLayoutSidebarLeftDock } from "react-icons/vsc";
+import logo from "@/assets/images/logo.png"
 
 export function SideBar() {
     const navItems = [
@@ -29,6 +31,9 @@ export function SideBar() {
 
         <>
             <aside className="hidden w-64 shrink-0 border-r border-default p-4 lg:block">
+                <div className="mb-10 flex justify-center">
+                    <Image src={logo} alt="logo" width={100} height={100}></Image>
+                </div>
                 {navContent}
             </aside>
 

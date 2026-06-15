@@ -58,10 +58,13 @@ export default function NavigationBar() {
                     {/* Right: Auth Buttons */}
                     <div className="flex items-center gap-4">
 
+
                         {
-                            user ? <Button variant="ghost" onClick={() => signOut()}>
-                                Log out
-                            </Button> : <Link
+                            user ? <Link href="/">
+                                <Button variant="ghost" onClick={() => signOut()}>
+                                    Log out
+                                </Button>
+                            </Link> : <Link
                                 href="/auth/login"
                                 className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors"
                             >

@@ -6,6 +6,7 @@ import { Button, Card, FieldError, Form, Input, InputGroup, Label, TextField } f
 import { useState } from "react";
 import { Description, Radio, RadioGroup } from "@heroui/react";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 export default function Signup() {
 
@@ -124,13 +125,25 @@ export default function Signup() {
                         </Radio>
                     </RadioGroup>
 
+                    <Link href='/auth/login'>
+                        <p>Already a member? <span className='text-blue-500'>Login now!</span> </p>
+
+                    </Link>
+
                     <div className="flex gap-2 w-full">
                         <Button type="submit" className="w-full">
                             Sign Up
                         </Button>
+
                         <Button type="reset" variant="secondary">
                             Reset
                         </Button>
+
+                        <Link href="/">
+                            <Button variant="secondary">
+                                Back
+                            </Button>
+                        </Link>
                     </div>
                 </Form>
             </Card>
