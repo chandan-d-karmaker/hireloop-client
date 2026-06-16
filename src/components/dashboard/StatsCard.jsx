@@ -16,7 +16,7 @@ export const StatCard = ({ icon, title, value, className }) => {
             )}
         >
 
-            <Card.Content className="flex flex-col gap-4 p-4">
+            <Card.Content className="flex flex-col gap-4 p-2">
 
                 <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-[#262626]">
                     <div className="w-6 h-6 flex items-center justify-center text-neutral-300">
