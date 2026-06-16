@@ -34,6 +34,7 @@ export default function PostJobForm() {
 
     const categories = [
         { id: "engineering", label: "Engineering & Tech" },
+        { id: "web", label: "Frontend Web Developer" },
         { id: "design", label: "Design & UX" },
         { id: "marketing", label: "Marketing" },
         { id: "sales", label: "Sales" },
@@ -50,10 +51,10 @@ export default function PostJobForm() {
         setIsLoading(true);
 
         const formData = new FormData(e.currentTarget);
-        const data = Object.fromEntries(formData.entries());
-        data.isRemote = isRemote;
+        const jobData = Object.fromEntries(formData.entries());
+        jobData.isRemote = isRemote;
 
-        console.log("Submitting Job Post:", data);
+        console.log("Submitting Job Post:", jobData);
 
         setTimeout(() => {
             setIsLoading(false);
@@ -188,7 +189,6 @@ export default function PostJobForm() {
 
                         {/* Location / Remote Toggle */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
-                            {/* UPDATED: Location using TextField */}
                             <TextField isDisabled={isRemote} name="location" className="w-full">
                                 <Label className={labelClass}>Location</Label>
                                 <div className="relative w-full">
@@ -204,21 +204,24 @@ export default function PostJobForm() {
                             </TextField>
 
                             <div className="flex items-center h-10 px-2">
+                                {/* UPDATED: HeroUI V3 Composable Switch */}
                                 <Switch
                                     isSelected={isRemote}
-                                    onValueChange={setIsRemote}
-                                    classNames={{
-                                        label: "text-neutral-300 font-medium"
-                                    }}
+                                    onChange={()=> setIsRemote(!isRemote)}
                                 >
-                                    Fully Remote Position
+                                    <Switch.Content className="text-neutral-300 font-medium flex-row items-center gap-2">
+                                        <Switch.Control>
+                                            <Switch.Thumb />
+                                        </Switch.Control>
+                                        Fully Remote Position
+                                    </Switch.Content>
                                 </Switch>
                             </div>
                         </div>
                     </fieldset>
 
                     {/* --- SECTION 2: JOB DESCRIPTION --- */}
-                    <fieldset className="flex flex-col gap-6 w-full">
+                    <fieldset className="flex flex-col gap-6 mt-4 w-full">
                         <legend className="text-lg font-medium text-white mb-4">Job Description</legend>
 
                         {/* UPDATED: TextAreas using TextField and `rows` instead of `minRows` */}
@@ -249,7 +252,8 @@ export default function PostJobForm() {
                             />
                         </TextField>
                     </fieldset>
-
+                    
+                    {/* TODO: autofill company data */}
                     {/* --- SECTION 3: COMPANY (Auto-filled) --- */}
                     <fieldset className="flex flex-col gap-6 w-full mt-4">
                         <legend className="text-lg font-medium text-white my-2">Posting Company</legend>
