@@ -14,7 +14,7 @@ const RecruiterDashboard = () => {
 
     const { data, isPending } = useSession();
     const user = data?.user;
-    console.log("user is the dashboard",user);
+    // console.log("user is the dashboard",user);
 
     if(isPending){
         return 
