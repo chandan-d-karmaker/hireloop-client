@@ -1,13 +1,14 @@
 'use client'
 import { StatsSection } from '@/components/dashboard/Stats';
 import { useSession } from '@/lib/auth-client';
+import { ProgressCircle } from '@heroui/react';
 import React from 'react';
 
 const recruiterDashboardStats = [
-  { iconKey: 'jobs', title: 'Total Job Posts', value: '48' },
-  { iconKey: 'applicants', title: 'Total Applicants', value: '1,284' },
-  { iconKey: 'active', title: 'Active Jobs', value: '18' },
-  { iconKey: 'closed', title: 'Jobs Closed', value: '32' },
+    { iconKey: 'jobs', title: 'Total Job Posts', value: '48' },
+    { iconKey: 'applicants', title: 'Total Applicants', value: '1,284' },
+    { iconKey: 'active', title: 'Active Jobs', value: '18' },
+    { iconKey: 'closed', title: 'Jobs Closed', value: '32' },
 ];
 
 const RecruiterDashboard = () => {
@@ -16,8 +17,13 @@ const RecruiterDashboard = () => {
     const user = data?.user;
     // console.log("user is the dashboard",user);
 
-    if(isPending){
-        return 
+    if (isPending) {
+        return <ProgressCircle isIndeterminate aria-label="Loading" className="flex items-center justify-center h-screen">
+            <ProgressCircle.Track>
+                <ProgressCircle.TrackCircle />
+                <ProgressCircle.FillCircle />
+            </ProgressCircle.Track>
+        </ProgressCircle>
     }
     return (
         <div>

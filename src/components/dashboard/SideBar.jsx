@@ -42,16 +42,17 @@ export function SideBar() {
             </aside>
 
             <Drawer>
-                <Button className="lg:hidden" variant="secondary">
+                <Button className="lg:hidden rounded-none" variant="secondary">
                     <VscLayoutSidebarLeftDock />
-                    Menu
                 </Button>
+
+                <div className="min-h-screen h-full lg:hidden w-1 text-default bg-default"></div>
                 <Drawer.Backdrop>
                     <Drawer.Content placement="left">
                         <Drawer.Dialog>
                             <Drawer.CloseTrigger />
                             <Drawer.Header>
-                                <Drawer.Heading>Navigation</Drawer.Heading>
+                                <Drawer.Heading>Hireloop</Drawer.Heading>
                             </Drawer.Header>
                             <Drawer.Body>
                                 {navContent}
