@@ -8,7 +8,7 @@ const DashBoardLayout = ({ children }) => {
             <SideBar />                           
             <div className='flex-1 flex flex-col max-h-screen overflow-hidden overflow-y-auto'>
                 <TopNavBar />                      
-                <div className='flex-1 p-10'>        
+                <div className='flex-1 p-8'>        
                     {children}
                 </div>
             </div>

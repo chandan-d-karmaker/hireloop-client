@@ -37,7 +37,7 @@ const TopNavBar = () => {
                 {/* profile section */}
                 <div className='flex gap-2 px-4'>
                     <div>
-                        <h1>{user?.name}</h1>
+                        <h1>{user?.name.split(' ')[0]}</h1>
                         <p className='text-muted'>{user?.role}</p>
                     </div>
                     <div>

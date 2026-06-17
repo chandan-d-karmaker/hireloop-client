@@ -20,10 +20,20 @@ import {
     Factory,
     ChevronDown
 } from "@gravity-ui/icons";
+import { createJob } from "@/lib/actions/jobs";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 export default function PostJobForm() {
     const [isRemote, setIsRemote] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+    // Mock configuration for recruiter's authenticated state
+    const [mockCompany] = useState({
+        name: "Acme Corp (Auto-filled)",
+        id: "company_123",
+        isApproved: true,
+    });
 
     // Mock data for dropdowns
     const jobTypes = [
@@ -35,7 +45,7 @@ export default function PostJobForm() {
 
     const categories = [
         { id: "engineering", label: "Engineering & Tech" },
-        { id: "web", label: "Frontend Web Developer" },
+        { id: "webdev", label: "Frontend Web Developer" },
         { id: "design", label: "Design & UX" },
         { id: "marketing", label: "Marketing" },
         { id: "sales", label: "Sales" },
@@ -51,15 +61,37 @@ export default function PostJobForm() {
         e.preventDefault();
         setIsLoading(true);
 
+        if (!mockCompany.isApproved) {
+            alert("Your company profile must be approved before you can post jobs.");
+            return;
+        }
+
         const formData = new FormData(e.currentTarget);
-        const jobData = Object.fromEntries(formData.entries());
-        jobData.isRemote = isRemote;
+        const data = Object.fromEntries(formData.entries());
+        data.isRemote = isRemote;
+        const jobData = {
+            ...data,
+            companyId: mockCompany.id,
+            status: "active",
+            isPubliclyVisible: true,
+        }
         console.log("Submitting Job Post:", jobData);
 
-        setTimeout(() => {
+        const res = await createJob(jobData);
+        if (res.insertedId) {
+            toast.success("Job posted successfully! It is now publicly visible.");
+            e.target.reset();
             setIsLoading(false);
-            // alert("Job posted successfully! It is now publicly visible.");
-        }, 1500);
+            redirect("/dashboard/recruiter/jobs");
+        } else {
+            toast.error("Something went wrong!");
+            setIsLoading(false);
+        }
+
+        // setTimeout(() => {
+        //     setIsLoading(false);
+        //     // alert("Job posted successfully! It is now publicly visible.");
+        // }, 1500);
     };
 
     // Shared generic input styles for primitive Input/TextArea
@@ -262,8 +294,8 @@ export default function PostJobForm() {
                                 <Factory className="text-neutral-400" />
                             </div>
                             <div>
-                                <p className="text-white font-medium">Acme Corp</p>
-                                <p className="text-sm text-neutral-400">Technology • Verified</p>
+                                <p className="text-white font-medium">{mockCompany.name}</p>
+                                <p className="text-sm text-neutral-400">{mockCompany.id}</p>
                             </div>
                         </div>
                     </fieldset>

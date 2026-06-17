@@ -26,7 +26,7 @@ export const StatsSection = ({ statsData, sectionTitle }) => {
   };
 
   return (
-    <div className="py-16">
+    <div className="py-10">
       {sectionTitle && (
         <h2 className="text-2xl font-semibold text-white mb-6">{sectionTitle}</h2>
       )}
