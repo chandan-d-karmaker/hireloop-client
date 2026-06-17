@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@heroui/react";
-import React from "react";
+import React, { useState } from "react";
 import AddCompany from "./AddCompany";
 import { useSession } from "@/lib/auth-client";
 
@@ -9,10 +9,10 @@ import { useSession } from "@/lib/auth-client";
 export default function CompanyEmptyState() {
 
     const [isLoading, setIsLoading] = useState(false);
-    const {data: session, isPending} = useSession();
+    const { data: session, isPending } = useSession();
     const user = session?.user;
 
-   
+
 
     // Shared generic input styles for primitive Input/TextArea to match your "Post a Job" design
     const baseInputClass = "bg-[#222222] border-none hover:bg-[#2A2A2A] focus-visible:bg-[#2A2A2A] rounded-xl px-4 py-2 text-white shadow-none focus-visible:ring-0 placeholder:text-neutral-500 w-full";
@@ -27,8 +27,8 @@ export default function CompanyEmptyState() {
                 <div className="relative flex items-center justify-center w-44 h-44 bg-transparent shadow-2xl backdrop-blur-3xl">
 
                     {/* background blur container
-                    <div className="absolute top-6 w-76 h-26 rounded-full p-5 bg-white/10">
-                    </div> */}
+                <div className="absolute top-6 w-76 h-26 rounded-full p-5 bg-white/10">
+                </div> */}
 
                     {/* Document card */}
                     <div
@@ -85,7 +85,7 @@ export default function CompanyEmptyState() {
 
                 {/* ── Actions ── */}
                 <div className="flex items-center gap-3 mt-1 w-full">
-                    <AddCompany/>
+                    <AddCompany />
 
                     <Button
                         variant="tertiary"

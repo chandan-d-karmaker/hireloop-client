@@ -10,17 +10,25 @@ import {
     TextArea,
     Form,
     Select,
-    ListBox
+    ListBox,
+    Spinner
 } from "@heroui/react";
 import {
     LocationArrow,
     ChevronDown,
-    ArrowUpFromLine // Or any suitable upload icon from Gravity UI
+    ArrowUpFromLine, // Or any suitable upload icon from Gravity UI
+    ArrowUpToLine
 } from "@gravity-ui/icons";
 import { useSession } from "@/lib/auth-client";
+import Image from "next/image";
+import { createCompany } from "@/lib/actions/company";
+import toast from "react-hot-toast";
 
 export default function AddCompany() {
     const [isLoading, setIsLoading] = useState(false);
+    const [logoUrl, setLogoUrl] = useState('');
+    const [errors, setErrors] = useState({});
+    const [isUploading, setIsUploading] = useState(false);
     const { data: session, isPending } = useSession();
     const user = session?.user;
 
@@ -40,6 +48,41 @@ export default function AddCompany() {
         { id: "500+", label: "500+ employees" },
     ];
 
+    const handleLogoUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Simple Validation
+        if (file.size > 5 * 1024 * 1024) {
+            setErrors(prev => ({ ...prev, logo: "File size exceeds 5MB limit" }));
+            return;
+        }
+
+        setIsUploading(true);
+        const formData = new FormData();
+        formData.append('image', file);
+
+        try {
+            const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMG_API;
+            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                setLogoUrl(data.data.url);
+                setErrors(prev => ({ ...prev, logo: null }));
+            } else {
+                setErrors(prev => ({ ...prev, logo: "Upload failed. Try again." }));
+            }
+        } catch (err) {
+            setErrors(prev => ({ ...prev, logo: "Network error during logo upload" }));
+        } finally {
+            setIsUploading(false);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -48,16 +91,28 @@ export default function AddCompany() {
         const data = Object.fromEntries(formData.entries());
         const companyData = {
             ...data,
-            addedBy: user._id,
-            addedAt: new Date(),
+            addedBy: user?.id,
+        }
+        console.log("Submitting Company Registration:", companyData);
+
+        const res = await createCompany(companyData);
+        console.log(res);
+
+        if (res.insertedId) {
+            toast.success("Company registered successfully!");
+            e.target.reset();
+            setIsLoading(false);
+            // redirect("/dashboard/recruiter/jobs");
+        } else {
+            toast.error("Something went wrong!");
+            setIsLoading(false);
         }
 
-        console.log("Submitting Company Registration:", data);
 
-        setTimeout(() => {
-            setIsLoading(false);
-            alert("Company registered successfully!");
-        }, 1500);
+        // setTimeout(() => {
+        //     setIsLoading(false);
+        //     alert("Company registered successfully!");
+        // }, 1500);
     };
 
     // Shared generic input styles for primitive Input/TextArea to match your "Post a Job" design
@@ -171,51 +226,61 @@ export default function AddCompany() {
                                             </Select>
                                         </div>
 
-                                        <div className="flex flex-col w-full gap-1.5">
-                                            <Label className={labelClass}>Company Logo</Label>
-                                            <div className="flex items-center gap-4">
-                                                <button
-                                                    type="button"
-                                                    className="w-14 h-14 bg-[#222222] border border-dashed border-neutral-600 rounded-xl flex items-center justify-center hover:bg-[#2A2A2A] transition-colors cursor-pointer"
-                                                >
-                                                    <ArrowUpFromLine className="w-5 h-5 text-neutral-400" />
-                                                </button>
+                                        <div className="flex flex-col gap-1 w-full">
+                                            <span className="text-zinc-400 font-medium text-sm">Company Logo</span>
+                                            <div className="flex items-center gap-4 mt-1">
+                                                <label className="w-14 h-14 border border-dashed border-zinc-700 hover:border-zinc-500 bg-zinc-900/40 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-colors group relative overflow-hidden">
+                                                    <input
+                                                        type="file"
+                                                        accept="image/png, image/jpeg"
+                                                        onChange={handleLogoUpload}
+                                                        className="hidden"
+                                                    />
+                                                    {logoUrl ? (
+                                                        <Image src={logoUrl} alt="Logo Preview" className="w-full h-full object-cover" width={100} height={100} />
+                                                    ) : (
+                                                        <ArrowUpToLine size={18} className="text-zinc-400 group-hover:text-zinc-200 transition-colors" />
+                                                    )}
+                                                </label>
                                                 <div className="flex flex-col">
-                                                    <span className="text-sm font-medium text-white">Upload image</span>
-                                                    <span className="text-xs text-neutral-500">PNG, JPG up to 5MB</span>
+                                                    <span className="text-sm font-medium text-zinc-300">
+                                                        {isUploading ? 'Uploading file...' : 'Upload image'}
+                                                    </span>
+                                                    <span className="text-xs text-zinc-600 mt-0.5">PNG, JPG up to 5MB</span>
                                                 </div>
                                             </div>
                                         </div>
+                                        {/* Row 4: Brief Description */}
+                                        <TextField isRequired name="description" className="w-full">
+                                            <Label className={labelClass}>Brief Description</Label>
+                                            <TextArea
+                                                rows={4}
+                                                placeholder="Tell us about your company's mission and culture..."
+                                                className={baseInputClass}
+                                            />
+                                        </TextField>
                                     </div>
 
-                                    {/* Row 4: Brief Description */}
-                                    <TextField isRequired name="description" className="w-full">
-                                        <Label className={labelClass}>Brief Description</Label>
-                                        <TextArea
-                                            rows={4}
-                                            placeholder="Tell us about your company's mission and culture..."
-                                            className={baseInputClass}
-                                        />
-                                    </TextField>
-                                </div>
+                                    {/* --- MODAL FOOTER --- */}
+                                    <Modal.Footer className="px-8 py-6 border-t border-neutral-800 flex justify-end gap-3 bg-[#181818]">
+                                        <Button
+                                            slot="close" // HeroUI v3 specific prop to auto-close modal
+                                            variant="flat"
+                                            className="bg-transparent text-white hover:bg-neutral-800 font-medium px-6"
+                                        >
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            type="submit"
+                                            isLoading={isLoading}
+                                            className="bg-white text-black font-semibold shadow-sm hover:bg-neutral-200 px-6"
+                                        >   {isLoading ? <div className="flex flex-col items-center">
+                                            <Spinner color="success" />
+                                        </div> : "Register Company"}
 
-                                {/* --- MODAL FOOTER --- */}
-                                <Modal.Footer className="px-8 py-6 border-t border-neutral-800 flex justify-end gap-3 bg-[#181818]">
-                                    <Button
-                                        slot="close" // HeroUI v3 specific prop to auto-close modal
-                                        variant="flat"
-                                        className="bg-transparent text-white hover:bg-neutral-800 font-medium px-6"
-                                    >
-                                        Cancel
-                                    </Button>
-                                    <Button
-                                        type="submit"
-                                        isLoading={isLoading}
-                                        className="bg-white text-black font-semibold shadow-sm hover:bg-neutral-200 px-6"
-                                    >
-                                        Register Company
-                                    </Button>
-                                </Modal.Footer>
+                                        </Button>
+                                    </Modal.Footer>
+                                </div>
                             </Form>
                         </Modal.Body>
 

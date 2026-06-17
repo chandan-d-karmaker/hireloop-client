@@ -74,6 +74,7 @@ export default function PostJobForm() {
             companyId: mockCompany.id,
             status: "active",
             isPubliclyVisible: true,
+            createdAt: new Date(),
         }
         console.log("Submitting Job Post:", jobData);
 
