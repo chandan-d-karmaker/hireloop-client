@@ -20,7 +20,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html
-            lang="en" data-theme="dark" suppressHydrationWarning
+            lang="en" data-theme="dark" suppressHydrationWarning scrollbehavior="smooth"
             className={`${geistSans.variable} ${geistMono.variable} h-full dark antialiased`}
         >
             <body className="min-h-full flex flex-col ">
