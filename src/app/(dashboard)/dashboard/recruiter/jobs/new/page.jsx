@@ -10,7 +10,8 @@ import {
     ListBox,
     Label,
     Switch,
-    Button
+    Button,
+    Spinner
 } from "@heroui/react";
 import {
     LocationArrow,
@@ -53,17 +54,16 @@ export default function PostJobForm() {
         const formData = new FormData(e.currentTarget);
         const jobData = Object.fromEntries(formData.entries());
         jobData.isRemote = isRemote;
-
         console.log("Submitting Job Post:", jobData);
 
         setTimeout(() => {
             setIsLoading(false);
-            alert("Job posted successfully! It is now publicly visible.");
+            // alert("Job posted successfully! It is now publicly visible.");
         }, 1500);
     };
 
     // Shared generic input styles for primitive Input/TextArea
-    const baseInputClass = "bg-[#222222] border-none hover:bg-[#2A2A2A] focus-visible:bg-[#2A2A2A] rounded-xl px-4 py-2 text-white shadow-none focus-visible:ring-0 placeholder:text-neutral-500 w-full";
+    const baseInputClass = "bg-[#222222] border-none hover:bg-[#2A2A2A] focus-visible:bg-[#2A2A2A] rounded-xl px-4 py-2 text-white shadow-none focus-visible:ring-1 placeholder:text-neutral-500 w-full";
 
     // Shared label style
     const labelClass = "text-neutral-300 font-medium pb-1.5 text-sm";
@@ -207,7 +207,7 @@ export default function PostJobForm() {
                                 {/* UPDATED: HeroUI V3 Composable Switch */}
                                 <Switch
                                     isSelected={isRemote}
-                                    onChange={()=> setIsRemote(!isRemote)}
+                                    onChange={() => setIsRemote(!isRemote)}
                                 >
                                     <Switch.Content className="text-neutral-300 font-medium flex-row items-center gap-2">
                                         <Switch.Control>
@@ -252,7 +252,7 @@ export default function PostJobForm() {
                             />
                         </TextField>
                     </fieldset>
-                    
+
                     {/* TODO: autofill company data */}
                     {/* --- SECTION 3: COMPANY (Auto-filled) --- */}
                     <fieldset className="flex flex-col gap-6 w-full mt-4">
@@ -283,7 +283,9 @@ export default function PostJobForm() {
                         isLoading={isLoading}
                         className="bg-white text-black font-semibold shadow-sm hover:bg-neutral-200"
                     >
-                        Post Job
+                        {isLoading ? <div className="flex flex-col items-center">
+                            <Spinner color="success" />
+                        </div> : "Post Job"}
                     </Button>
                 </div>
 
