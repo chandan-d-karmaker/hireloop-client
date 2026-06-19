@@ -1,3 +1,4 @@
+import { getRecruiterCompany } from '@/lib/api/companies';
 import { getCompanyJobs } from '@/lib/api/jobs';
 import { Button, Chip, Tooltip } from '@heroui/react';
 import { Table } from "@heroui/react";
@@ -6,8 +7,8 @@ import Link from 'next/link';
 import React from 'react';
 
 const Jobs = async () => {
-    const companyId = 'company_123'
-    const jobs = await getCompanyJobs(companyId);
+    const company = await getRecruiterCompany();
+    const jobs = await getCompanyJobs(company._id);
     console.log(jobs);
 
     const getStatusColor = (status) => {
