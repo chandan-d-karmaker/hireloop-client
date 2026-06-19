@@ -3,14 +3,8 @@
 import { Button } from "@heroui/react";
 import React, { useState } from "react";
 import AddCompany from "./AddCompany";
-import { useSession } from "@/lib/auth-client";
 
-
-export default function CompanyEmptyState() {
-
-    const [isLoading, setIsLoading] = useState(false);
-   
-
+export default function CompanyEmptyState() {   
 
     // Shared generic input styles for primitive Input/TextArea to match your "Post a Job" design
     const baseInputClass = "bg-[#222222] border-none hover:bg-[#2A2A2A] focus-visible:bg-[#2A2A2A] rounded-xl px-4 py-2 text-white shadow-none focus-visible:ring-0 placeholder:text-neutral-500 w-full";
@@ -83,6 +77,7 @@ export default function CompanyEmptyState() {
 
                 {/* ── Actions ── */}
                 <div className="flex items-center gap-3 mt-1 w-full">
+                    
                     <AddCompany />
 
                     <Button

@@ -1,14 +1,24 @@
+'use client'
+import CompanyCard from '@/components/dashboard/CompanyCard';
 import CompanyEmptyState from '@/components/dashboard/NoCompany';
-import { getUserSession } from '@/lib/core/session';
 import React from 'react';
 
-const RecruiterCompany = async() => {
+const CompanyProfile = ({myCompany}) => {
+    console.log(myCompany);
 
     return (
         <div>
-            <CompanyEmptyState/>
+            {
+                myCompany.length > 0 ? <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {
+                    myCompany.map((company, idx) => {
+                        return <CompanyCard key={idx} company={company} />
+                    })
+                }
+            </div> : <CompanyEmptyState/>
+            }
         </div>
     );
 };
 
-export default RecruiterCompany;
+export default CompanyProfile;

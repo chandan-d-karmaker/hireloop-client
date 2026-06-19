@@ -23,6 +23,7 @@ import { useSession } from "@/lib/auth-client";
 import Image from "next/image";
 import { createCompany } from "@/lib/actions/company";
 import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 export default function AddCompany() {
     const [isLoading, setIsLoading] = useState(false);
@@ -103,7 +104,7 @@ export default function AddCompany() {
             toast.success("Company registered successfully!");
             e.target.reset();
             setIsLoading(false);
-            // redirect("/dashboard/recruiter/jobs");
+            redirect("/dashboard/recruiter/company");
         } else {
             toast.error("Something went wrong!");
             setIsLoading(false);
