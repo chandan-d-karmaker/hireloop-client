@@ -23,17 +23,24 @@ import {
 import { createJob } from "@/lib/actions/jobs";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 export default function PostJobForm({ company }) {
     const [isRemote, setIsRemote] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    console.log("Company data in job post:", company);
+
+    // const { _id, companyName, location, logoUrl } = company;
+
+    // console.log("Recruiter company info:", {_id, companyName, location, logoUrl});
+
     // Mock configuration for recruiter's authenticated state
-    const [mockCompany] = useState({
-        name: "Acme Corp (Auto-filled)",
-        id: "company_123",
-        isApproved: true,
-    });
+    // const [mockCompany] = useState({
+    //     name: "Acme Corp (Auto-filled)",
+    //     id: "company_123",
+    //     isApproved: true,
+    // });
 
     // Mock data for dropdowns
     const jobTypes = [
@@ -61,17 +68,19 @@ export default function PostJobForm({ company }) {
         e.preventDefault();
         setIsLoading(true);
 
-        if (!mockCompany.isApproved) {
-            alert("Your company profile must be approved before you can post jobs.");
-            return;
-        }
+        // if (!mockCompany.isApproved) {
+        //     alert("Your company profile must be approved before you can post jobs.");
+        //     return;
+        // }
 
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries());
         data.isRemote = isRemote;
         const jobData = {
             ...data,
-            companyId: mockCompany.id,
+            companyId: company?._id,
+            companyName: company?.companyName,
+            companyLogo: company?.logoUrl,
             status: "active",
             isPubliclyVisible: true,
             createdAt: new Date(),
@@ -292,11 +301,15 @@ export default function PostJobForm({ company }) {
                         <legend className="text-lg font-medium text-white my-2">Posting Company</legend>
                         <div className="bg-[#1A1A1A] border border-neutral-800 rounded-xl p-4 flex items-center gap-4">
                             <div className="w-12 h-12 bg-neutral-800 rounded-lg flex items-center justify-center">
-                                <Factory className="text-neutral-400" />
+                                {company?.logoUrl ? (
+                                    <Image src={company?.logoUrl} alt="Logo Preview" className="w-full h-full object-cover" width={100} height={100} />
+                                ) : (
+                                    <Factory className="text-neutral-400" />
+                                )}
                             </div>
                             <div>
-                                <p className="text-white font-medium">{mockCompany.name}</p>
-                                <p className="text-sm text-neutral-400">{mockCompany.id}</p>
+                                <p className="text-white font-medium">{company?.companyName}</p>
+                                <p className="text-sm text-neutral-400">{company?.location}</p>
                             </div>
                         </div>
                     </fieldset>
