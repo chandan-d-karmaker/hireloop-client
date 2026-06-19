@@ -91,6 +91,7 @@ export default function AddCompany() {
         const data = Object.fromEntries(formData.entries());
         const companyData = {
             ...data,
+            logoUrl,
             addedBy: user?.id,
         }
         console.log("Submitting Company Registration:", companyData);
