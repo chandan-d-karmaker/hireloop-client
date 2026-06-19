@@ -9,7 +9,7 @@ const CompanyProfile = ({ myCompany }) => {
     return (
         <div>
             {
-                myCompany ? <CompanyCard company={myCompany} /> : <CompanyEmptyState />
+                myCompany._id ? <CompanyCard company={myCompany} /> : <CompanyEmptyState />
             }
         </div>
     );

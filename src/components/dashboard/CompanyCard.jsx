@@ -11,10 +11,10 @@ import Image from 'next/image';
 export default function CompanyCard({ company }) {
     // Destructure the expected fields from your JSON object
     const {
-        companyName = "Unknown Company",
-        industry = "Uncategorized",
-        location = "Unknown Location",
-        description = "No description provided.",
+        companyName,
+        industry,
+        location,
+        description,
         logoUrl,
         // _id, website, employeeCount, addedBy, createdAt could be used for links or other details
     } = company || {};
