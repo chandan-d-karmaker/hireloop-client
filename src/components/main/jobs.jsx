@@ -1,10 +1,11 @@
 import { FiArrowRight } from "react-icons/fi";
 import JobCard from "../shared/JobCard";
 import { getFeaturedJobs } from "@/lib/api/jobs";
+import Link from "next/link";
 
-async function JobsSection () {
+async function JobsSection() {
   const jobs = await getFeaturedJobs();
- 
+
   return (
     <section className="bg-[#0a0a0f] py-24 px-6">
       <div className="max-w-7xl mx-auto">
@@ -18,17 +19,19 @@ async function JobsSection () {
           The roles you&apos;d never
           <br />find by searching
         </h2>
- 
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {jobs.map((job, i) => (
             <JobCard key={i} job={job} />
           ))}
         </div>
- 
-        <div className="flex justify-center mt-10">
-          <button className="px-6 py-2.5 text-sm text-white border border-white/15 rounded-full hover:border-white/30 hover:bg-white/5 transition-colors flex items-center gap-2">
-            View all jobs open <FiArrowRight size={14} />
-          </button>
+
+        <div className="flex justify-center items-center mt-10">
+          <Link href="/jobs">
+            <button className="px-6 py-2.5 text-sm text-white border border-white/15 rounded-full hover:border-white/30 hover:bg-white/5 transition-colors flex items-center gap-2">
+              View all jobs open <FiArrowRight size={14} />
+            </button>
+          </Link>
         </div>
       </div>
     </section>

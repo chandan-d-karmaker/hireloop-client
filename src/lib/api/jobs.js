@@ -1,3 +1,5 @@
+import { serverQuery } from "../core/server";
+
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const getCompanyJobs = async (companyId, status = 'active') => {
@@ -5,11 +7,9 @@ export const getCompanyJobs = async (companyId, status = 'active') => {
     return response.json();
 };
 
-export const getAllJobs = async (status = 'active') => {
-    const response = await fetch(`${baseUrl}/api/all-jobs?status=${status}`);
-    return response.json();
+export const getAllJobs = async () => {
+    return serverQuery('/api/jobs');
 };
-export const getFeaturedJobs = async (status = 'active') => {
-    const response = await fetch(`${baseUrl}/api/feat-jobs?status=${status}`);
-    return response.json();
+export const getFeaturedJobs = async () => {
+    return serverQuery('/api/feat-jobs');
 };
