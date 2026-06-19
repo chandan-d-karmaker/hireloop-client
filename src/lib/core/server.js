@@ -1,5 +1,10 @@
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
+export const serverQuery = async (path) => {
+    const res = await fetch(`${baseUrl}${path}`);
+    return res.json();
+}
+
 export const serverMutation = async (path, data) => {
     const res = await fetch(`${baseUrl}${path}`, {
         method: 'POST',

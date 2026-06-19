@@ -9,9 +9,7 @@ import { useSession } from "@/lib/auth-client";
 export default function CompanyEmptyState() {
 
     const [isLoading, setIsLoading] = useState(false);
-    const { data: session, isPending } = useSession();
-    const user = session?.user;
-
+   
 
 
     // Shared generic input styles for primitive Input/TextArea to match your "Post a Job" design
