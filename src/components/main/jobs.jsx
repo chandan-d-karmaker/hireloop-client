@@ -1,14 +1,9 @@
 import { FiArrowRight } from "react-icons/fi";
 import JobCard from "../shared/JobCard";
+import { getFeaturedJobs } from "@/lib/api/jobs";
 
-function JobsSection() {
-  const jobs = Array(6).fill({
-    title: "Frontend Developer",
-    desc: "Showcase your commitment to diversity and inclusion by highlighting initiatives.",
-    location: "New York, USA",
-    type: "Hybrid",
-    salary: "€35 - €40/hour",
-  });
+async function JobsSection () {
+  const jobs = await getFeaturedJobs();
  
   return (
     <section className="bg-[#0a0a0f] py-24 px-6">
@@ -26,7 +21,7 @@ function JobsSection() {
  
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {jobs.map((job, i) => (
-            <JobCard key={i} {...job} />
+            <JobCard key={i} job={job} />
           ))}
         </div>
  
