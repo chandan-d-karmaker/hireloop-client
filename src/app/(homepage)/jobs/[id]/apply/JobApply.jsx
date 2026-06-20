@@ -42,6 +42,7 @@ const JobApply = ({ job, applicant }) => {
         if (res.insertedId) {
             toast.success('Application submitted successfully!');
             setFormData({ resumeLink: '', portfolioLink: '', additionalNotes: '' });
+            window.location.reload();
         }
     };
 

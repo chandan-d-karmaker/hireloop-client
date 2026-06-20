@@ -20,7 +20,7 @@ export default function NavigationBar() {
     const menuItems = [
         { name: "Browse Jobs", href: "/jobs" },
         { name: "Company", href: "/company" },
-        { name: "Pricing", href: "/pricing" },
+        { name: "Pricing", href: "/plans" },
     ];
 
     return (

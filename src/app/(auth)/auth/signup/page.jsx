@@ -22,11 +22,13 @@ export default function Signup() {
         const formData = new FormData(e.currentTarget);
         const userData = Object.fromEntries(formData.entries());
 
+        const plan = userData.role === 'seeker' ? 'seeker_free' : 'recruiter_free';
+
         console.log(userData);
 
         const { data, error } = await authClient.signUp.email({
             ...userData,
-
+            plan
         });
 
         // console.log("signup detailes: ", { data, error });
