@@ -11,7 +11,8 @@ import {
     Label,
     Switch,
     Button,
-    Spinner
+    Spinner,
+    Chip
 } from "@heroui/react";
 import {
     LocationArrow,
@@ -120,7 +121,9 @@ export default function PostJobForm({ company }) {
                 </p>
             </div>
 
-            <Form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full">
+            {company.status !== 'Approved' && <div className="text-center my-4">Please wait to get approval</div>}
+
+            {company.status === 'Approved' &&  <Form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full">
 
                 <div className="p-6 pt-0 sm:p-8 sm:pt-0">
                     {/* --- SECTION 1: JOB INFO --- */}
@@ -310,6 +313,7 @@ export default function PostJobForm({ company }) {
                             <div>
                                 <p className="text-white font-medium">{company?.companyName}</p>
                                 <p className="text-sm text-neutral-400">{company?.location}</p>
+                                <Chip className="text-emerald-500 font-medium bg-emerald-950/30 px-1.5 py-0.5 rounded border border-emerald-900/50">{company.status}</Chip>
                             </div>
                         </div>
                     </fieldset>
@@ -335,7 +339,7 @@ export default function PostJobForm({ company }) {
                     </Button>
                 </div>
 
-            </Form>
+            </Form>}
         </div>
     );
 }

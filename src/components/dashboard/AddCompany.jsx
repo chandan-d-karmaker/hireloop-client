@@ -94,6 +94,7 @@ export default function AddCompany() {
             ...data,
             logoUrl,
             addedBy: user?.id,
+            status: 'Pending'
         }
         console.log("Submitting Company Registration:", companyData);
 

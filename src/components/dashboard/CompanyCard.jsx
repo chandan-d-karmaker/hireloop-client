@@ -1,12 +1,13 @@
 import React from 'react';
 import { Card, Chip, Button } from "@heroui/react";
-import { 
-    Factory, 
-    LocationArrow, 
-    ArrowRight, 
+import {
+    Factory,
+    LocationArrow,
+    ArrowRight,
     CircleCheckFill // For the verified badge
 } from "@gravity-ui/icons";
 import Image from 'next/image';
+import { CircleDotIcon } from 'lucide-react';
 
 export default function CompanyCard({ company }) {
     // Destructure the expected fields from your JSON object
@@ -16,18 +17,19 @@ export default function CompanyCard({ company }) {
         location,
         description,
         logoUrl,
+        status
         // _id, website, employeeCount, addedBy, createdAt could be used for links or other details
     } = company || {};
 
     // In a real app, you might calculate this by fetching related jobs.
     // For this UI, we'll hardcode a generic number or pass it as a prop.
-    const activeJobsCount = 12; 
-    
+    const activeJobsCount = 12;
+
     // Simulate a verified status based on your screenshot
-    const isVerified = true; 
+    const isVerified = status === 'approved';
 
     return (
-        <Card 
+        <Card
             className="w-full max-w-95 bg-[#1A1A1A] border border-neutral-800 p-6 rounded-2xl flex flex-col justify-between shadow-none hover:border-neutral-700 transition-colors"
         >
             <div className="flex flex-col gap-5">
@@ -37,10 +39,10 @@ export default function CompanyCard({ company }) {
                     <div className="w-14 h-14 bg-[#262626] rounded-xl overflow-hidden border border-neutral-800 flex items-center justify-center">
                         {logoUrl ? (
                             <Image
-                                src={logoUrl} 
+                                src={logoUrl}
                                 width={100}
                                 height={100}
-                                alt={`${companyName} logo`} 
+                                alt={`${companyName} logo`}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
                                     // Fallback if image fails to load
@@ -49,16 +51,16 @@ export default function CompanyCard({ company }) {
                                 }}
                             />
                         ) : null}
-                        
+
                         {/* Fallback Icon if no logo URL or image fails */}
-                        <Factory 
-                            className="w-6 h-6 text-neutral-500" 
-                            style={{ display: logoUrl ? 'none' : 'block' }} 
+                        <Factory
+                            className="w-6 h-6 text-neutral-500"
+                            style={{ display: logoUrl ? 'none' : 'block' }}
                         />
                     </div>
 
                     {/* Verified Badge */}
-                    {isVerified && (
+                    {isVerified ? (
                         <Chip
                             size="sm"
                             variant="flat"
@@ -67,6 +69,16 @@ export default function CompanyCard({ company }) {
                             startcontent={<CircleCheckFill className="w-3 h-3" />}
                         >
                             VERIFIED
+                        </Chip>
+                    ) : (
+                        <Chip
+                            size="sm"
+                            variant="flat"
+                            color="success"
+                            className="bg-[#052e16] text-[#22c55e] border border-[#14532d] px-2 py-0.5 gap-1"
+                            startcontent={<CircleDotIcon className="w-3 h-3" />}
+                        >
+                            Pending
                         </Chip>
                     )}
                 </div>
@@ -107,8 +119,8 @@ export default function CompanyCard({ company }) {
                 <span className="text-sm font-medium text-white">
                     {activeJobsCount} Active Jobs
                 </span>
-                
-                <Button 
+
+                <Button
                     variant="light"
                     className="text-white font-medium p-0 h-auto hover:bg-transparent hover:opacity-70 transition-opacity"
                     endContent={<ArrowRight className="w-4 h-4 ml-1" />}
