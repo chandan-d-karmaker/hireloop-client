@@ -5,10 +5,16 @@ import { Button, Card, FieldError, Form, Input, InputGroup, Label, TextField } f
 import { authClient } from '@/lib/auth-client';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const LoginPage = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [error, setError] = useState('');
+
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectTo = searchParams.get("redirect") || "/"
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,17 +35,18 @@ const LoginPage = () => {
             return;
         } else {
             toast.success("Logged in successfully!");
+            router.push(redirectTo);
         }
 
         const role = data?.user?.role;
 
-        if (role === 'recruiter') {
-            window.location.href = '/dashboard/recruiter';
-        } else if (role === 'seeker') {
-            window.location.href = '/dashboard/seeker';
-        } else {
-            window.location.href = '/';
-        }
+        // if (role === 'recruiter') {
+        //     window.location.href = '/dashboard/recruiter';
+        // } else if (role === 'seeker') {
+        //     window.location.href = '/dashboard/seeker';
+        // } else {
+        //     router.push(redirectTo);
+        // }
 
 
     }
@@ -108,7 +115,7 @@ const LoginPage = () => {
                         </InputGroup>
                     </TextField>
 
-                    <Link href='/auth/signup'>
+                    <Link href={`/auth/signup?redirect=${redirectTo}`}>
                         <p>Not a member? <span className='text-blue-500'>Register Now</span> </p>
 
                     </Link>

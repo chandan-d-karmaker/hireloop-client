@@ -7,11 +7,15 @@ import { useState } from "react";
 import { Description, Radio, RadioGroup } from "@heroui/react";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Signup() {
 
     const [isVisible, setIsVisible] = useState(false);
     const [error, setError] = useState('');
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectTo = searchParams.get("redirect") || "/"
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -22,7 +26,7 @@ export default function Signup() {
 
         const { data, error } = await authClient.signUp.email({
             ...userData,
-           
+
         });
 
         // console.log("signup detailes: ", { data, error });
@@ -31,17 +35,18 @@ export default function Signup() {
             toast.error(error.message)
         } else {
             toast.success("Signup Successfull!");
+            router.push(redirectTo);
         }
 
         const role = data?.user?.role;
 
-        if (role === 'recruiter') {
-            window.location.href = '/dashboard/recruiter';
-        } else if (role === 'seeker') {
-            window.location.href = '/dashboard/seeker';
-        } else {
-            window.location.href = '/';
-        }
+        // if (!redirectTo && role === 'recruiter') {
+        //     window.location.href = '/dashboard/recruiter';
+        // } else if (!redirectTo && role === 'seeker') {
+        //     window.location.href = '/dashboard/seeker';
+        // } else {
+        //     router.push(redirectTo);
+        // }
     };
 
     return (
@@ -132,7 +137,7 @@ export default function Signup() {
                         </Radio>
                     </RadioGroup>
 
-                    <Link href='/auth/login'>
+                    <Link href={`/auth/login?redirect=${redirectTo}`}>
                         <p>Already a member? <span className='text-blue-500'>Login now!</span> </p>
 
                     </Link>

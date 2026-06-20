@@ -14,7 +14,6 @@ import {
     Briefcase,
     CalendarClock,
     CheckCircle2,
-    ExternalLink,
     ExternalLinkIcon
 } from 'lucide-react';
 import Image from 'next/image';
@@ -86,11 +85,13 @@ const JobDetailsPage = async ({ params }) => {
                             >
                                 <Share size={18} />
                             </Button>
-                            <Button
-                                className="flex-1 md:flex-none bg-white text-black font-semibold px-8 py-3 rounded-xl hover:bg-neutral-200 transition-colors"
-                            >
-                                Apply Now
-                            </Button>
+                            <Link href={`/jobs/${job._id}/apply`}>
+                                <Button
+                                    className="flex-1 md:flex-none bg-white text-black font-semibold px-8 py-3 rounded-xl hover:bg-neutral-200 transition-colors"
+                                >
+                                    Apply Now
+                                </Button>
+                            </Link>
                         </div>
                     </Card.Content>
                 </Card>
@@ -193,7 +194,7 @@ const JobDetailsPage = async ({ params }) => {
                                 <Button variant="secondary" className="w-full hover:bg-[#202020] border-[#2e2e2e] text-neutral-300 rounded-lg transition-colors">
                                     <Link
                                         href="#"
-                                       className='flex gap-2 items-center'
+                                        className='flex gap-2 items-center'
                                     >
                                         <ExternalLinkIcon size={16} />
                                         Visit Website
