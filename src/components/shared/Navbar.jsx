@@ -23,6 +23,21 @@ export default function NavigationBar() {
         { name: "Pricing", href: "/plans" },
     ];
 
+    const dashboardLinks = {
+        seeker: '/dashboard/seeker',
+        recruiter: '/dashboard/recruiter',
+        admin: '/dashboard/admin'
+    }
+
+    if (user?.email) {
+        menuItems.push(
+            {
+                name: 'Dashboard',
+                href: dashboardLinks[user?.role || 'seeker']
+            }
+        )
+    }
+
     return (
         <div className="w-full py-4 px-4 sm:px-8 border-b border-default">
 
