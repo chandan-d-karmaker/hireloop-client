@@ -1,8 +1,10 @@
+import { getJobById } from '@/lib/api/jobs';
 import { getUserSession } from '@/lib/core/session';
 import { ShieldExclamation } from '@gravity-ui/icons';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react';
+import JobApply from './JobApply';
 
 const ApplyJobPage = async ({ params }) => {
 
@@ -34,9 +36,12 @@ const ApplyJobPage = async ({ params }) => {
             </div>
         );
     }
+
+    const job = await getJobById(id);
+
     return (
         <div>
-            <h1>Apply for this job</h1>
+            <JobApply applicant={user} job={job}/>
         </div>
     );
 };
