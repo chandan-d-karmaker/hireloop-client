@@ -7,6 +7,10 @@ export const getCompanyJobs = async (companyId, status = 'active') => {
     return response.json();
 };
 
+export const getJobById = async (id) => {
+    return serverQuery(`/api/jobs/${id}`);
+}
+
 export const getAllJobs = async (searchParams = {}) => {
     try {
         // Convert the searchParams object into a valid query string (e.g., "?category=webdev&jobType=full-time")

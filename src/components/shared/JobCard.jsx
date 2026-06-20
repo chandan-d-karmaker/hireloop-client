@@ -1,5 +1,6 @@
 import { Button, Card } from "@heroui/react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function JobCard({ job }) {
 
@@ -58,12 +59,12 @@ export default function JobCard({ job }) {
 
       <Card.Footer className="py-2">
         <Button variant="primary">
-          <a href="#" className="inline-flex items-center gap-2 text-[15px] font-medium text-white hover:text-black transition-opacity">
+          <Link href={`/jobs/${job._id}`} className="inline-flex items-center gap-2 text-[15px] font-medium text-white hover:text-black transition-opacity">
             Apply Now
             <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </a>
+          </Link>
         </Button>
       </Card.Footer>
     </Card>
