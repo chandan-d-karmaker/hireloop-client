@@ -28,11 +28,12 @@ const JobApply = ({ job, applicant }) => {
         // Combine the pre-existing job/applicant data with the new form data
         const submissionData = {
             jobId: job?._id,
-            jobTitle: job?.jobTitle,
+            jobTitle: job?.title,
             companyName: job?.companyName,
             applicantId: applicant?.id,
             applicantName: applicant?.name,
             applicantEmail: applicant?.email,
+            status: 'applied',
             ...formData
         };
 

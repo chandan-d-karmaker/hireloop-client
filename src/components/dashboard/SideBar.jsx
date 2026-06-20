@@ -23,7 +23,7 @@ export async function SideBar() {
 
     const seekerNavLinks = [
         { icon: VectorSquare, href: "/dashboard/seeker", label: "Dashboard" },
-        { icon: Magnifier, href: "/dashboard/seeker/jobs", label: "Jobs" },
+        { icon: Magnifier, href: "/jobs", label: "Jobs" },
         { icon: Bookmark, href: "/dashboard/seeker/saved-jobs", label: "Saved Jobs" },
         { icon: FileText, href: "/dashboard/seeker/applications", label: "Applications" },
         { icon: CreditCard, href: "/dashboard/seeker/billing", label: "Billing" },
