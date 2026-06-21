@@ -3,14 +3,14 @@
 import { authClient } from "@/lib/auth-client";
 import { Check, Eye, EyeSlash } from "@gravity-ui/icons";
 import { Button, Card, FieldError, Form, Input, InputGroup, Label, TextField } from "@heroui/react";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { Description, Radio, RadioGroup } from "@heroui/react";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function Signup() {
-
+// 1. Move your main logic into a separate component
+function SignupContent() {
     const [isVisible, setIsVisible] = useState(false);
     const [error, setError] = useState('');
     const router = useRouter();
@@ -31,8 +31,6 @@ export default function Signup() {
             plan
         });
 
-        // console.log("signup detailes: ", { data, error });
-
         if (error) {
             toast.error(error.message)
         } else {
@@ -41,18 +39,10 @@ export default function Signup() {
         }
 
         const role = data?.user?.role;
-
-        // if (!redirectTo && role === 'recruiter') {
-        //     window.location.href = '/dashboard/recruiter';
-        // } else if (!redirectTo && role === 'seeker') {
-        //     window.location.href = '/dashboard/seeker';
-        // } else {
-        //     router.push(redirectTo);
-        // }
+        // Role based redirection commented out based on your snippet
     };
 
     return (
-
         <div className="flex min-h-screen items-center justify-center bg-background px-4">
             <Card className="w-full max-w-md p-6 shadow-sm border border-zinc-200 dark:border-zinc-800">
 
@@ -63,7 +53,6 @@ export default function Signup() {
                 </div>
 
                 <Form className="flex flex-col gap-4" onSubmit={onSubmit}>
-
                     {
                         error && <div className="alert alert-error rounded-lg text-sm">
                             <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
@@ -87,7 +76,6 @@ export default function Signup() {
                             if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
                                 return "Please enter a valid email address";
                             }
-
                             return null;
                         }}
                     >
@@ -102,7 +90,6 @@ export default function Signup() {
                             <InputGroup.Input
                                 className="w-full max-w-64 rounded-xl"
                                 type={isVisible ? "text" : "password"}
-                            //   value={isVisible ? "87$2h.3diua" : "••••••••"}
                             />
                             <InputGroup.Suffix className="pr-0">
                                 <Button
@@ -141,7 +128,6 @@ export default function Signup() {
 
                     <Link href={`/auth/login?redirect=${redirectTo}`}>
                         <p>Already a member? <span className='text-blue-500'>Login now!</span> </p>
-
                     </Link>
 
                     <div className="flex gap-2 w-full">
@@ -162,6 +148,14 @@ export default function Signup() {
                 </Form>
             </Card>
         </div>
+    );
+}
 
+// 2. Wrap the component in Suspense for the default export
+export default function Signup() {
+    return (
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>
+            <SignupContent />
+        </Suspense>
     );
 }

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { Check, Eye, EyeSlash } from "@gravity-ui/icons";
 import { Button, Card, FieldError, Form, Input, InputGroup, Label, TextField } from "@heroui/react";
 import { authClient } from '@/lib/auth-client';
@@ -7,14 +7,14 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-const LoginPage = () => {
+// 1. Move your main logic into a separate component
+const LoginContent = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [error, setError] = useState('');
 
     const router = useRouter();
     const searchParams = useSearchParams();
     const redirectTo = searchParams.get("redirect") || '/';
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,12 +23,10 @@ const LoginPage = () => {
 
         const { data, error } = await authClient.signIn.email({
             ...userData,
-
             // callbackURL: '/',
         });
 
         console.log("Login user data:", data)
-
 
         if (error) {
             setError(error.message);
@@ -39,18 +37,8 @@ const LoginPage = () => {
         }
 
         const role = data?.user?.role;
-
-        // if (role === 'recruiter') {
-        //     window.location.href = '/dashboard/recruiter';
-        // } else if (role === 'seeker') {
-        //     window.location.href = '/dashboard/seeker';
-        // } else {
-        //     router.push(redirectTo);
-        // }
-
-
+        // Role based redirection commented out based on your snippet
     }
-
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -64,7 +52,6 @@ const LoginPage = () => {
                 </div>
 
                 <Form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-
                     {
                         error && <div className="alert alert-error rounded-lg text-sm">
                             <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
@@ -73,7 +60,6 @@ const LoginPage = () => {
                             <span>{error}</span>
                         </div>
                     }
-
 
                     <TextField
                         className='max-w-64 w-full'
@@ -84,7 +70,6 @@ const LoginPage = () => {
                             if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
                                 return "Please enter a valid email address";
                             }
-
                             return null;
                         }}
                     >
@@ -99,7 +84,6 @@ const LoginPage = () => {
                             <InputGroup.Input
                                 className="w-full max-w-64 rounded-xl"
                                 type={isVisible ? "text" : "password"}
-                            //   value={isVisible ? "87$2h.3diua" : "••••••••"}
                             />
                             <InputGroup.Suffix className="pr-0">
                                 <Button
@@ -117,9 +101,7 @@ const LoginPage = () => {
 
                     <Link href={`/auth/signup?redirect=${redirectTo}`}>
                         <p>Not a member? <span className='text-blue-500'>Register Now</span> </p>
-
                     </Link>
-
 
                     <div className="flex gap-2 w-full">
                         <Button type="submit" className="w-full">
@@ -132,6 +114,16 @@ const LoginPage = () => {
                 </Form>
             </Card>
         </div>
+    );
+};
+
+// 2. Wrap the component in Suspense for the default export
+const LoginPage = () => {
+    return (
+        // You can customize the fallback UI to be a spinner or skeleton loader
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>
+            <LoginContent />
+        </Suspense>
     );
 };
 
