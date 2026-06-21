@@ -50,5 +50,5 @@ const handleStatusCode = res => {
         redirect('/forbidden');
     }
 
-    return res.json()
+    return res.json();
 }
