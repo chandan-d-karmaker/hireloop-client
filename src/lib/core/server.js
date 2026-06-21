@@ -25,7 +25,7 @@ export const protectedFetch = async (path) => {
 
 export const serverQuery = async (path) => {
     const res = await fetch(`${baseUrl}${path}`);
-    return res.json();
+    return handleStatusCode(res);
 }
 
 export const serverMutation = async (path, data, method ='POST') => {

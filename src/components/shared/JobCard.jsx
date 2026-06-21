@@ -1,72 +1,116 @@
-import { Button, Card } from "@heroui/react";
+import React from "react";
+import { Card, Button, Link } from "@heroui/react";
+import { MapPin, Briefcase, CircleDollar, ArrowRight } from "@gravity-ui/icons";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function JobCard({ job }) {
+  // Guard clause in case the prop isn't passed or is loading
+  if (!job) return null;
 
-  const { companyLogo, companyName, title, responsibilities, isRemote, location, jobType, salaryMin, salaryMax } = job;
+  // Format salary string safely (e.g., "160000" becomes "160k")
+  const formatSalary = (amount) => {
+    if (!amount) return "0";
+    const numericAmount = parseInt(amount, 10);
+    return numericAmount >= 1000 ? `${numericAmount / 1000}k` : amount;
+  };
+
+  const salaryRange = job.minSalary && job.maxSalary
+    ? `$${formatSalary(job.minSalary)}–$${formatSalary(job.maxSalary)} / year`
+    : "Salary Negociable";
+
+  // Safely extract the ID string depending on your MongoDB data hydration setup
+  const jobId = job._id?.$oid || job._id;
+
   return (
-
-    <Card className="bg-[#121212] text-white border-none rounded-[24px] p-6 shadow-2xl">
-      <Card.Header className="flex flex-col items-start gap-4 pb-2">
-        {/* Company Info */}
+    <Card className="p-6 w-full max-w-110 border-none bg-zinc-900 text-zinc-100 rounded-[32px] shadow-2xl">
+      
+      {/* Card Header: Company Info & Job Title */}
+      <Card.Header className="flex flex-col items-start gap-4 p-0 pb-3">
         <div className="flex items-center gap-3">
-          <Image
-            src={companyLogo}
-            alt="Adobe Logo"
-            width={100}
-            height={100}
-            className="w-8 h-8 rounded-lg object-cover bg-white"
-          />
-          <span className="text-sm font-medium text-neutral-300">{companyName}</span>
+          {job.companyLogo && (
+            <Image
+              src={job.companyLogo}
+              alt={`${job.companyName || "Company"} logo`}
+              width={100}
+              height={100}
+              className="w-8 h-8 object-contain rounded-md"
+            />
+          )}
+          <span className="text-lg font-medium text-zinc-300">
+            {job.companyName || "Confidential"}
+          </span>
         </div>
-
-        {/* Title & Description */}
-        <div className="flex flex-col gap-2">
-          <Card.Title className="text-[26px] font-semibold tracking-wide leading-8 m-0">
-            {title}
-          </Card.Title>
-          <Card.Description className="text-[#a3a3a3] text-[15px] leading-relaxed line-clamp-2 m-0">
-            {responsibilities}
+        
+        <Card.Title className="text-3xl font-semibold tracking-tight text-white leading-tight">
+          {job.jobTitle}
+        </Card.Title>
+        
+        {job.responsibilities && (
+          <Card.Description className="text-base text-zinc-400 line-clamp-2">
+            {job.responsibilities}
           </Card.Description>
-        </div>
+        )}
       </Card.Header>
 
-      <Card.Content className="py-4">
-        {/* Pill-shaped Tags */}
-        <div className="flex flex-wrap gap-2.5">
-          <span className="flex items-center gap-2 bg-[#202020] px-4 py-2 rounded-full text-[14px] font-medium text-[#f5f5f5]">
-            <svg className="w-4 h-4 text-[#e5b3e5]" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-            </svg>
-            {isRemote ? "Remote" : location}
-          </span>
-          <span className="flex items-center gap-2 bg-[#202020] px-4 py-2 rounded-full text-[14px] font-medium text-[#f5f5f5]">
-            <svg className="w-4 h-4 text-[#e5b3e5]" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" />
-            </svg>
-            {jobType}
-          </span>
-          <span className="flex items-center gap-2 bg-[#202020] px-4 py-2 rounded-full text-[14px] font-medium text-[#f5f5f5]">
-            <svg className="w-4 h-4 text-[#e5b3e5]" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39h-1.94c-.08-.9-.64-1.83-2.22-1.83-1.5 0-2.32.81-2.32 1.45 0 .8.5 1.41 2.83 1.96 2.62.62 4.02 1.76 4.02 3.86 0 2.05-1.47 3.01-3.22 3.3z" />
-            </svg>
-            <span>{salaryMin} {"-"}</span>
-            <span>{salaryMax}/month</span>
-          </span>
+      {/* Card Content: Badges/Tags & Technical Details */}
+      <Card.Content className="flex flex-col gap-5 p-0 py-4">
+        {/* Badge Grid matching your reference layout */}
+        <div className="flex flex-wrap gap-2">
+          {/* Location Tag */}
+          {job.location && (
+            <div className="flex items-center gap-2 bg-zinc-800/60 px-4 py-2 rounded-full border border-zinc-800">
+              <MapPin className="text-purple-400 w-4 h-4" />
+              <span className="text-sm font-medium text-zinc-200">
+                {job.location} {job.isRemote && "(Remote)"}
+              </span>
+            </div>
+          )}
+
+          {/* Job Type Tag */}
+          {job.jobType && (
+            <div className="flex items-center gap-2 bg-zinc-800/60 px-4 py-2 rounded-full border border-zinc-800">
+              <Briefcase className="text-purple-400 w-4 h-4" />
+              <span className="text-sm font-medium text-zinc-200 capitalize">
+                {job.jobType}
+              </span>
+            </div>
+          )}
+
+          {/* Salary Tag */}
+          <div className="flex items-center gap-2 bg-zinc-800/60 px-4 py-2 rounded-full border border-zinc-800 w-fit">
+            <div className="flex justify-center items-center bg-purple-500/20 rounded-full w-5 h-5">
+              <CircleDollar className="text-purple-400 w-3 h-3" />
+            </div>
+            <span className="text-sm font-medium text-zinc-200">{salaryRange}</span>
+          </div>
         </div>
+
+        {/* Supplemental info strings */}
+        {(job.requirements || job.benefits) && (
+          <div className="text-xs text-zinc-500 space-y-1 border-t border-zinc-800/60 pt-3">
+            {job.requirements && (
+              <p><strong className="text-zinc-400">Requirements:</strong> {job.requirements}</p>
+            )}
+            {job.benefits && (
+              <p><strong className="text-zinc-400">Benefits:</strong> {job.benefits}</p>
+            )}
+          </div>
+        )}
       </Card.Content>
 
-      <Card.Footer className="py-2">
-        <Button variant="primary">
-          <Link href={`/jobs/${job._id}`} className="inline-flex items-center gap-2 text-[15px] font-medium text-white hover:text-black transition-opacity">
-            Apply Now
-            <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </Link>
-        </Button>
+      {/* Card Footer: Action Button */}
+      <Card.Footer className="p-0 pt-4">
+        <Link
+          href={`/jobs/${jobId}`}
+          className="group flex justify-start items-center gap-2 bg-transparent hover:bg-zinc-800/40 p-0 text-base font-medium text-white transition-all duration-200"
+          variant="light"
+          disableRipple
+        >
+          Apply Now
+          <ArrowRight className="group-hover:translate-x-1 text-zinc-400 group-hover:text-white w-4 h-4 transition-transform duration-200" />
+        </Link>
       </Card.Footer>
+
     </Card>
   );
 }

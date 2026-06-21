@@ -7,6 +7,10 @@ export const getCompanyJobs = async (companyId, status = 'active') => {
     return response.json();
 };
 
+export const getJobs = async (queryString) =>{
+    return serverQuery(`/api/jobs?${queryString}`);
+}
+
 export const getJobById = async (id) => {
     return serverQuery(`/api/jobs/${id}`);
 }

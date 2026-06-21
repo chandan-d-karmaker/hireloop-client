@@ -13,7 +13,7 @@ const LoginPage = () => {
 
     const router = useRouter();
     const searchParams = useSearchParams();
-    const redirectTo = searchParams.get("redirect") || "/"
+    const redirectTo = searchParams.get("redirect") || '/';
 
 
     const handleSubmit = async (e) => {
