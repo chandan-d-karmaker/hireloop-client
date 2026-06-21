@@ -1,8 +1,8 @@
-import { serverQuery } from "../core/server";
+import { protectedFetch, serverQuery } from "../core/server";
 import { getUserSession } from "../core/session";
 
 export const getCompanies = async () => {
-    return serverQuery(`/api/companies`);
+    return protectedFetch(`/api/companies`);
 }
 
 export const getMyCompanies = async (addedBy) => {
