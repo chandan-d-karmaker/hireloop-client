@@ -1,3 +1,5 @@
+'use server';
+
 import { serverQuery } from "../core/server";
 
 export const getPlanById = async (planId) => {

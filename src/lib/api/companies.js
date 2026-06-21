@@ -1,3 +1,5 @@
+'use server';
+
 import { protectedFetch, serverQuery } from "../core/server";
 import { getUserSession } from "../core/session";
 

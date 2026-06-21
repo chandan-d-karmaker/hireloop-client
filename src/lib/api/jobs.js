@@ -1,3 +1,5 @@
+'use server';
+
 import { serverQuery } from "../core/server";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
