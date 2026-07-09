@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hireloop Client
+
+Hireloop is a hiring/recruitment platform built with Next.js. This repository contains the **client** (frontend) application.
+
+> 🚧 **Status: Work in Progress** — This project is under active development. Features, structure, and APIs may change frequently, and things may be incomplete or broken.
+
+**Live Demo:** [hireloop-client-ck.vercel.app](https://hireloop-client-ck.vercel.app/)
+
+---
+
+## Tech Stack
+
+- **Framework:** [Next.js](https://nextjs.org/) 16 (App Router)
+- **UI:** [React](https://react.dev/) 19, [HeroUI](https://www.heroui.com/), [Tailwind CSS](https://tailwindcss.com/) 4
+- **Auth:** [better-auth](https://www.better-auth.com/) with MongoDB adapter
+- **Database:** [MongoDB](https://www.mongodb.com/)
+- **Payments:** [Stripe](https://stripe.com/)
+- **Icons:** lucide-react, react-icons
+- **Notifications:** react-hot-toast
+- **Theming:** next-themes
+- **Linting:** ESLint
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (LTS recommended)
+- A MongoDB connection string
+- A Stripe account (for payment-related features)
+
+### Installation
+
+```bash
+git clone https://github.com/chandan-d-karmaker/hireloop-client.git
+cd hireloop-client
+npm install
+```
+
+### Environment Variables
+
+Create a `.env.local` file in the root of the project and add the required environment variables, for example:
+
+```bash
+# MongoDB
+MONGODB_URI=your_mongodb_connection_string
+
+# better-auth
+BETTER_AUTH_SECRET=your_auth_secret
+BETTER_AUTH_URL=http://localhost:3000
+
+# Stripe
+STRIPE_SECRET_KEY=your_stripe_secret_key
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+```
+
+> Update the variable names above as your actual configuration evolves — this section will be kept in sync with the project as it's finalized.
+
+### Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Other scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build   # Build for production
+npm run start   # Start the production server
+npm run lint    # Run ESLint
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+hireloop-client/
+├── public/        # Static assets
+├── src/           # Application source code
+├── package.json
+└── ...
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Roadmap / Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is actively being built out. Planned/in-progress areas include:
 
-## Deploy on Vercel
+- [ ] Core hiring/recruitment workflows
+- [ ] Authentication flows (sign up, sign in, sessions)
+- [ ] Payment/subscription integration via Stripe
+- [ ] UI polish and responsive design
+- [ ] Documentation of full feature set
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Feel free to open an issue if you spot a bug or have a suggestion.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+This project is deployed on [Vercel](https://vercel.com/). Check out the [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Author
+
+**Chandan D. Karmaker** — [GitHub](https://github.com/chandan-d-karmaker)
+
+## License
+
+No license has been specified yet for this project.
