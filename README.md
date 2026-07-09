@@ -74,11 +74,134 @@ npm run lint    # Run ESLint
 ## Project Structure
 
 ```
-hireloop-client/
-├── public/        # Static assets
-├── src/           # Application source code
-├── package.json
-└── ...
+├── app
+│   ├── (auth)
+│   │   ├── auth
+│   │   │   ├── login
+│   │   │   │   └── page.jsx
+│   │   │   └── signup
+│   │   │       └── page.jsx
+│   │   └── layout.jsx
+│   ├── (dashboard)
+│   │   └── dashboard
+│   │       ├── admin
+│   │       │   ├── companies
+│   │       │   │   └── page.jsx
+│   │       │   ├── users
+│   │       │   │   └── page.jsx
+│   │       │   ├── layout.jsx
+│   │       │   └── page.jsx
+│   │       ├── recruiter
+│   │       │   ├── company
+│   │       │   │   ├── companyProfile.jsx
+│   │       │   │   └── page.jsx
+│   │       │   ├── jobs
+│   │       │   │   ├── new
+│   │       │   │   │   ├── PostJobForm.jsx
+│   │       │   │   │   └── page.jsx
+│   │       │   │   └── page.jsx
+│   │       │   ├── layout.jsx
+│   │       │   └── page.jsx
+│   │       ├── seeker
+│   │       │   ├── applications
+│   │       │   │   ├── ApplicationTable.jsx
+│   │       │   │   └── page.jsx
+│   │       │   ├── layout.jsx
+│   │       │   └── page.jsx
+│   │       └── layout.jsx
+│   ├── (homepage)
+│   │   ├── forbidden
+│   │   │   └── page.jsx
+│   │   ├── jobs
+│   │   │   ├── [id]
+│   │   │   │   ├── apply
+│   │   │   │   │   ├── JobApply.jsx
+│   │   │   │   │   └── page.jsx
+│   │   │   │   └── page.jsx
+│   │   │   └── page.jsx
+│   │   ├── plans
+│   │   │   ├── success
+│   │   │   │   └── page.jsx
+│   │   │   └── page.jsx
+│   │   ├── unauthorized
+│   │   │   └── page.jsx
+│   │   ├── layout.js
+│   │   └── page.js
+│   ├── api
+│   │   ├── auth
+│   │   │   └── [...all]
+│   │   │       └── route.js
+│   │   └── checkout_sessions
+│   │       └── route.js
+│   ├── providers
+│   │   └── theme-provider.jsx
+│   ├── favicon.ico
+│   ├── globals.css
+│   └── layout.js
+├── assets
+│   ├── images
+│   │   ├── cta-bg.png
+│   │   ├── globe.png
+│   │   └── logo.png
+│   └── logos
+│       ├── adobe.png
+│       ├── airbnb.png
+│       ├── amazon.png
+│       ├── apple.png
+│       ├── google.png
+│       ├── meta.png
+│       ├── microsoft.png
+│       ├── netflix.png
+│       ├── nvidia.png
+│       ├── spotify.png
+│       ├── tesla.png
+│       └── uber.png
+├── components
+│   ├── dashboard
+│   │   ├── AddCompany.jsx
+│   │   ├── AdminUsersTable.jsx
+│   │   ├── CompanyCard.jsx
+│   │   ├── CompanyTable.jsx
+│   │   ├── NoCompany.jsx
+│   │   ├── SideBar.jsx
+│   │   ├── Stats.jsx
+│   │   ├── StatsCard.jsx
+│   │   └── TopNavBar.jsx
+│   ├── main
+│   │   ├── Featured.jsx
+│   │   ├── Last.jsx
+│   │   ├── hero.jsx
+│   │   ├── jobs.jsx
+│   │   ├── pricing.jsx
+│   │   └── stats.jsx
+│   └── shared
+│       ├── Footer.jsx
+│       ├── JobCard.jsx
+│       ├── JobFilters.jsx
+│       ├── JobListingContainer.jsx
+│       ├── JobSearch.jsx
+│       ├── NavLink.jsx
+│       ├── Navbar.jsx
+│       └── theme-toggle.jsx
+└── lib
+    ├── actions
+    │   ├── application.js
+    │   ├── company.js
+    │   ├── jobs.js
+    │   ├── subscriptions.js
+    │   └── users.js
+    ├── api
+    │   ├── applications.js
+    │   ├── companies.js
+    │   ├── jobs.js
+    │   ├── plans.js
+    │   └── users.js
+    ├── core
+    │   ├── server.js
+    │   └── session.js
+    ├── auth-client.js
+    ├── auth.js
+    └── stripe.js
 ```
 
 ## Roadmap / Notes
